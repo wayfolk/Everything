@@ -130,4 +130,4 @@ git sparse-checkout set _meta/Workspaces THEU0000/Output/Code
 git reset --hard main
 ```
 <br/>
-<sub><sup>copyright © 2020-present, Theun de Bruijn. all rights reserved.</sup></sub>
+<sub><sup>copyright © 2021-present, Wayfolk. all rights reserved.</sup></sub>
