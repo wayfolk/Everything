@@ -93,7 +93,7 @@ lfs-folderstore --version
 
 # make a sparse checkout</sup>  
 mkdir -p "/mnt/c/Work/Wayfolk"
-git clone --no-checkout git@github.com-theundebruijn:theundebruijn/Everything.git "/mnt/c/Work/Wayfolk/Everything"
+git clone --no-checkout git@github.com-wayfolk:wayolk/Everything.git "/mnt/c/Work/Wayfolk/Everything"
 cd "/mnt/c/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
@@ -118,7 +118,7 @@ git sparse-checkout set THEU0000/Input/Resources
 # zsh (wayfolk)
 # make a sparse checkout</sup>  
 mkdir -p "/home/wayfolk/Work/Wayfolk"
-git clone --no-checkout git@github.com-theundebruijn:wayfolk/Everything.git "/home/wayfolk/Work/Wayfolk/Everything"
+git clone --no-checkout git@github.com-wayfolk:wayfolk/Everything.git "/home/wayfolk/Work/Wayfolk/Everything"
 cd "/home/wayfolk/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
