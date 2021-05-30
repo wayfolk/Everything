@@ -93,7 +93,7 @@ lfs-folderstore --version
 
 # make a sparse checkout</sup>  
 mkdir -p "/mnt/c/Work/Wayfolk"
-git clone --no-checkout git@github.com-wayfolk:wayolk/Everything.git "/mnt/c/Work/Wayfolk/Everything"
+git clone --no-checkout git@github.com-wayfolk:wayfolk/Everything.git "/mnt/c/Work/Wayfolk/Everything"
 cd "/mnt/c/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
