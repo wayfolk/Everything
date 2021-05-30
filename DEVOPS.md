@@ -118,13 +118,14 @@ exit
 ``` 
 ```powershell
 # powershell (regular user)
-cp .\Downloads\.zshrc \\wsl$\wsl-wayfolk\home\wayfolk
+cp .\Downloads\.zshrc_wayfolk \\wsl$\wsl-wayfolk\home\wayfolk
 wsl -d wsl-wayfolk -u wayfolk
 ```  
 ```zsh
 # zsh (wayfolk)
 cd ~
-sudo chown $USER:$USER ./.zshrc
+sudo chown $USER:$USER ./.zshrc_wayfolk
+mv ./.zshrc_wayfolk ./.zshrc
 exit
 ```
 ```powershell
