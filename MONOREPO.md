@@ -126,7 +126,7 @@ git config --add lfs.customtransfer.lfs-folder.path lfs-folderstore
 git config --add lfs.customtransfer.lfs-folder.args "/home/wayfolk/.gcsfuse_mountpoint"
 git config --add lfs.standalonetransferagent lfs-folder
 git sparse-checkout init --cone
-git sparse-checkout set _meta/Workspaces THEU0000/Output/Code
+git sparse-checkout set _meta/Workspaces WAYF0001/Output/Code
 git reset --hard main
 ```
 <br/>
