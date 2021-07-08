@@ -24,14 +24,15 @@ import { LOG } from '~/_utils/LOG.js';
 import sCSS from './WebGL.css';
 
 /// ASSETS WEBGL ///
-import home_LOD0 from './assets/home_LOD0.glb';
-import home_LOD1 from './assets/home_LOD1.glb';
-import theMainInTheWall_LOD0 from './assets/the-man-in-the-wall_LOD0.glb';
-import theMainInTheWall_LOD1 from './assets/the-man-in-the-wall_LOD1.glb';
-import theVeil_LOD0 from './assets/the-veil_LOD0.glb';
-import theVeil_LOD1 from './assets/the-veil_LOD1.glb';
-import anotherWorldAwaits_LOD0 from './assets/another-world-awaits_LOD0.glb';
-import anotherWorldAwaits_LOD1 from './assets/another-world-awaits_LOD1.glb';
+// import home_LOD0 from './assets/home_LOD0.glb';
+// import home_LOD1 from './assets/home_LOD1.glb';
+// import theMainInTheWall_LOD0 from './assets/the-man-in-the-wall_LOD0.glb';
+// import theMainInTheWall_LOD1 from './assets/the-man-in-the-wall_LOD1.glb';
+// import theVeil_LOD0 from './assets/the-veil_LOD0.glb';
+// import theVeil_LOD1 from './assets/the-veil_LOD1.glb';
+// import anotherWorldAwaits_LOD0 from './assets/another-world-awaits_LOD0.glb';
+// import anotherWorldAwaits_LOD1 from './assets/another-world-awaits_LOD1.glb';
+import test_scene_0001 from './assets/test_scene_0001.glb';
 
 /// SHADERS WEBGL ///
 import reflectorFragment from './shaders/three/reflector/reflectorFragment.glsl';
@@ -418,103 +419,105 @@ class WebGL extends HTMLElement {
     // LINK: https://threejs.org/docs/#api/en/lights/shadows/LightShadow.bias
 
     if (this.activePage === 'home') {
-      this.entities.lights['pointLight'] = new THREE.PointLight(0xb9ace3, 50000.0, 500, 2.0);
-      this.entities.lights['pointLight'].position.set(20, 20, 20);
+      // this.entities.lights['pointLight'] = new THREE.PointLight(0xb9ace3, 50000.0, 500, 2.0);
+      // this.entities.lights['pointLight'].position.set(20, 20, 20);
 
       // TODO: why does this add a massive GPU load? (shadows?)
       // this.entities.lights['pointLight2'] = new THREE.PointLight(0xa08b68, 5000.0, 500, 2.0);
       // this.entities.lights['pointLight2'].position.set(0, 10, 20);
 
-    } else if (this.activePage === 'the-veil') {
+    }
+    // } else if (this.activePage === 'the-veil') {
 
-      // TODO: this is _very_ heavy on mobile
-      // can we make it work by tweaking the shader? or the model?
-      if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
-        const mirrorGeometry = new THREE.PlaneGeometry(22.1, 29.1, 1, 1);
-        const mirror = new Reflector(mirrorGeometry, {
-          clipBias: 0.000001,
-          textureWidth: 4096,
-          textureHeight:4096,
-          color:new THREE.Color(0x6e6e9b),
-        });
-        mirror.position.y = 1.66;
-        mirror.position.z = 1.675;
-        mirror.rotation.x = -0.006; // compensate for scene inaccuracy
-        this.scene.add(mirror);
-      };
+    //   // TODO: this is _very_ heavy on mobile
+    //   // can we make it work by tweaking the shader? or the model?
+    //   if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
+    //     const mirrorGeometry = new THREE.PlaneGeometry(22.1, 29.1, 1, 1);
+    //     const mirror = new Reflector(mirrorGeometry, {
+    //       clipBias: 0.000001,
+    //       textureWidth: 4096,
+    //       textureHeight:4096,
+    //       color:new THREE.Color(0x6e6e9b),
+    //     });
+    //     mirror.position.y = 1.66;
+    //     mirror.position.z = 1.675;
+    //     mirror.rotation.x = -0.006; // compensate for scene inaccuracy
+    //     this.scene.add(mirror);
+    //   };
 
-      this.entities.lights['pointLight'] = new THREE.PointLight(0xb9ace3, 5000.0, 500, 2.0);
-      this.entities.lights['pointLight'].position.set(20, 20, 10);
+    //   this.entities.lights['pointLight'] = new THREE.PointLight(0xb9ace3, 5000.0, 500, 2.0);
+    //   this.entities.lights['pointLight'].position.set(20, 20, 10);
 
-    } else if (this.activePage === 'the-man-in-the-wall') {
+    // } else if (this.activePage === 'the-man-in-the-wall') {
 
-      // TODO: this is _very_ heavy on mobile
-      // can we make it work by tweaking the shader? or the model?
-      if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
-        const mirrorGeometry = new THREE.PlaneGeometry(22.1, 29.1, 1, 1);
-        const mirror = new Reflector(mirrorGeometry, {
-          clipBias: 0.000001,
-          textureWidth: 4096,
-          textureHeight: 4096,
-          color:new THREE.Color(0x6e6e9b),
-        });
-        mirror.position.y = 0.01;
-        mirror.position.z = 0;
-        mirror.rotation.x = - Math.PI / 2;
-        this.scene.add(mirror);
-      };
+    //   // TODO: this is _very_ heavy on mobile
+    //   // can we make it work by tweaking the shader? or the model?
+    //   if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
+    //     const mirrorGeometry = new THREE.PlaneGeometry(22.1, 29.1, 1, 1);
+    //     const mirror = new Reflector(mirrorGeometry, {
+    //       clipBias: 0.000001,
+    //       textureWidth: 4096,
+    //       textureHeight: 4096,
+    //       color:new THREE.Color(0x6e6e9b),
+    //     });
+    //     mirror.position.y = 0.01;
+    //     mirror.position.z = 0;
+    //     mirror.rotation.x = - Math.PI / 2;
+    //     this.scene.add(mirror);
+    //   };
 
-      this.entities.lights['pointLight'] = new THREE.PointLight(0xb9ace3, 2500.0, 500, 2.0);
-      this.entities.lights['pointLight'].position.set(10, 10, 10);
+    //   this.entities.lights['pointLight'] = new THREE.PointLight(0xb9ace3, 2500.0, 500, 2.0);
+    //   this.entities.lights['pointLight'].position.set(10, 10, 10);
 
-    } else if (this.activePage === 'another-world-awaits') {
-      this.entities.lights['pointLight'] = new THREE.PointLight(0xffffff, 2500000.0, 500, 2.0);
-      this.entities.lights['pointLight'].position.set(0, 150, 0);
-    };
+    // } else if (this.activePage === 'another-world-awaits') {
+    //   this.entities.lights['pointLight'] = new THREE.PointLight(0xffffff, 2500000.0, 500, 2.0);
+    //   this.entities.lights['pointLight'].position.set(0, 150, 0);
+    // };
 
     // TODO: this explodes on mobile (VRAM?)
     // reducing shadow res might work
 
-    this.entities.lights['pointLight'].castShadow = true;
-    this.entities.lights['pointLight'].shadow.bias = -0.0005;
+    // this.entities.lights['pointLight'].castShadow = true;
+    // this.entities.lights['pointLight'].shadow.bias = -0.0005;
 
-    if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
-      this.entities.lights['pointLight'].shadow.mapSize.width = 2048;
-      this.entities.lights['pointLight'].shadow.mapSize.height = 2048;
+    // if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
+    //   this.entities.lights['pointLight'].shadow.mapSize.width = 2048;
+    //   this.entities.lights['pointLight'].shadow.mapSize.height = 2048;
 
-    } else {
-      this.entities.lights['pointLight'].shadow.mapSize.width = 512;
-      this.entities.lights['pointLight'].shadow.mapSize.height = 512;
-    };
+    // } else {
+    //   this.entities.lights['pointLight'].shadow.mapSize.width = 512;
+    //   this.entities.lights['pointLight'].shadow.mapSize.height = 512;
+    // };
 
-    this.entities.lights['pointLight'].updateMatrixWorld(true);
-    this.scene.add(this.entities.lights['pointLight']);
+    // this.entities.lights['pointLight'].updateMatrixWorld(true);
+    // this.scene.add(this.entities.lights['pointLight']);
   };
 
   createBundledEntityTweens() {
 
     if (this.activePage === 'home') {
 
-      this.oTweens['pointLightPosition'] = TweenMax.fromTo(this.entities.lights['pointLight'].position, 10, {
-        x: this.entities.lights['pointLight'].position.x,
-      }, { x: -20, repeat: -1, yoyo: true, ease: Sine.easeInOut, onComplete: function() {},
-      });
+      // this.oTweens['pointLightPosition'] = TweenMax.fromTo(this.entities.lights['pointLight'].position, 10, {
+      //   x: this.entities.lights['pointLight'].position.x,
+      // }, { x: -20, repeat: -1, yoyo: true, ease: Sine.easeInOut, onComplete: function() {},
+      // });
 
-    } else if (this.activePage === 'the-veil') {
+    }
+    //  else if (this.activePage === 'the-veil') {
 
-      this.oTweens['pointLightPosition'] = TweenMax.fromTo(this.entities.lights['pointLight'].position, 10, {
-        x: this.entities.lights['pointLight'].position.x,
-      }, { x: -20, repeat: -1, yoyo: true, ease: Sine.easeInOut, onComplete: function() {},
-      });
+    //   this.oTweens['pointLightPosition'] = TweenMax.fromTo(this.entities.lights['pointLight'].position, 10, {
+    //     x: this.entities.lights['pointLight'].position.x,
+    //   }, { x: -20, repeat: -1, yoyo: true, ease: Sine.easeInOut, onComplete: function() {},
+    //   });
 
-    } else if (this.activePage === 'the-man-in-the-wall') {
+    // } else if (this.activePage === 'the-man-in-the-wall') {
 
-      this.oTweens['pointLightPosition'] = TweenMax.fromTo(this.entities.lights['pointLight'].position, 10, {
-        x: this.entities.lights['pointLight'].position.x,
-      }, { x: -10, repeat: -1, yoyo: true, ease: Sine.easeInOut, onComplete: function() {},
-      });
+    //   this.oTweens['pointLightPosition'] = TweenMax.fromTo(this.entities.lights['pointLight'].position, 10, {
+    //     x: this.entities.lights['pointLight'].position.x,
+    //   }, { x: -10, repeat: -1, yoyo: true, ease: Sine.easeInOut, onComplete: function() {},
+    //   });
 
-    } else if (this.activePage === 'another-world-awaits') {}
+    // } else if (this.activePage === 'another-world-awaits') {}
   };
 
   loadResources(fCB) {
@@ -526,44 +529,13 @@ class WebGL extends HTMLElement {
     this.dracoLoader.preload();
     gltfLoader.setDRACOLoader(this.dracoLoader);
 
-    if (this.activePage === 'home') {
-
-      if (this.env.bIsMobile || this.env.nGPUTier === 1) {
-        resourceLoader.add('glft_scene', home_LOD1, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      } else {
-        resourceLoader.add('glft_scene', home_LOD0, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      }
-
-    }  else if (this.activePage === 'the-veil') {
-
-      if (this.env.bIsMobile || this.env.nGPUTier === 1) {
-        resourceLoader.add('glft_scene', theVeil_LOD1, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      } else {
-        resourceLoader.add('glft_scene', theVeil_LOD0, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      }
-
-    } else if (this.activePage === 'the-man-in-the-wall') {
-
-      if (this.env.bIsMobile || this.env.nGPUTier === 1) {
-        resourceLoader.add('glft_scene', theMainInTheWall_LOD1, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      } else {
-        resourceLoader.add('glft_scene', theMainInTheWall_LOD0, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      }
-
-    } else if (this.activePage === 'another-world-awaits') {
-
-      if (this.env.bIsMobile || this.env.nGPUTier === 1) {
-        resourceLoader.add('glft_scene', anotherWorldAwaits_LOD1, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      } else {
-        resourceLoader.add('glft_scene', anotherWorldAwaits_LOD0, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
-      }
-
-    };
+    resourceLoader.add('glft_scene', test_scene_0001, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
 
     resourceLoader.use(function(resource, next) {
 
       if (resource.extension === 'glb') {
         gltfLoader.parse(resource.data, '', function (gltf) {
+          // console.log(gltf);
           this.resources[resource.name] = gltf;
 
           next();
@@ -595,23 +567,55 @@ class WebGL extends HTMLElement {
       }.bind(this));
     };
 
+
     fCB();
   };
 
   createLoadedEntities() {
-    if (this.activePage === 'another-world-awaits') {
-      this.resources['glft_scene'].scene.children[0].position.x = 0;
-      this.resources['glft_scene'].scene.children[0].position.y = -1117 -166; // scene value + manual offset to set to set 0,0,0 point
+    // console.log(this.resources['glft_scene']);
 
-      this.resources['glft_scene'].scene.children[0].material.color = new THREE.Color(0x0d0e0f); // override with a blueish bhue
-      this.resources['glft_scene'].scene.children[0].material.metalness = .85; // tweaking the reflective properties
-      this.resources['glft_scene'].scene.children[0].material.roughness = .5; // tweaking the reflective properties
+    // TODO: store the camera(s) incl. 'default cam
+    // TODO: switch between the cameras at will
 
-      this.resources['glft_scene'].scene.children[1].position.x = 0;
-      this.resources['glft_scene'].scene.children[1].position.y = 163.57322692871094 -166; // scene value + manual offset to set 0,0,0 point
-    };
+    // cameras
+    for (let i = 0; i < this.resources['glft_scene'].cameras.length; i++) {
+      this.scene.add(this.resources['glft_scene'].cameras[i]);
+    }
 
-    this.scene.add(this.resources['glft_scene'].scene);
+
+    for (let i = 0; i < this.resources['glft_scene'].scene.children.length; i++) {
+      const element = this.resources['glft_scene'].scene.children[i];
+      console.log(element);
+
+      // meshes
+      if (element.userData.type === 'mesh') {
+        this.scene.add(this.resources['glft_scene'].scene.children[i]);
+      }
+
+      // pointLights
+      else if (element.userData.type === 'pointLight') {
+        this.entities.lights['pointLight'] = new THREE.PointLight(new THREE.Color(element.userData.color), element.userData.power, 500, 2.0);
+        this.entities.lights['pointLight'].position.copy(element.position);
+        this.entities.lights['pointLight'].castShadow = true;
+        this.entities.lights['pointLight'].shadow.bias = -0.0005;
+
+        if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
+          this.entities.lights['pointLight'].shadow.mapSize.width = 2048;
+          this.entities.lights['pointLight'].shadow.mapSize.height = 2048;
+
+        } else {
+          this.entities.lights['pointLight'].shadow.mapSize.width = 512;
+          this.entities.lights['pointLight'].shadow.mapSize.height = 512;
+        };
+
+        this.entities.lights['pointLight'].updateMatrixWorld(true);
+        this.scene.add(this.entities.lights['pointLight']);
+      }
+
+    }
+
+    console.log(this.scene)
+
   };
 
   createLoadedEntityTweens() {};
@@ -723,9 +727,9 @@ class WebGL extends HTMLElement {
     this.entities.helpers['polarGridHelper'].visible = false;
     this.scene.add(this.entities.helpers['polarGridHelper']);
 
-    this.entities.helpers['pointLightHelper'] = new THREE.PointLightHelper(this.entities.lights['pointLight'], 1.0, 0x808080);
-    this.entities.helpers['pointLightHelper'].visible = false;
-    this.scene.add(this.entities.helpers['pointLightHelper']);
+    // this.entities.helpers['pointLightHelper'] = new THREE.PointLightHelper(this.entities.lights['pointLight'], 1.0, 0x808080);
+    // this.entities.helpers['pointLightHelper'].visible = false;
+    // this.scene.add(this.entities.helpers['pointLightHelper']);
   };
 
   createAnimationLoop() {
