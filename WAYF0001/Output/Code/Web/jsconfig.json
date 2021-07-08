@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": { "~/*": ["src/*"] },
+    "moduleResolution": "node",
+    "target": "es2020",
+    "checkJs": true
+  },
+  "include":  ["src/**/*", "_meta/types/**/*"],
+  "exclude": ["node_modules", "_dev", "_dist", "_tmp"]
+}

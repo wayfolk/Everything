@@ -1,0 +1,24 @@
+{
+  "home": {
+    "document": {
+      "title": "WAYFOLK : ENGINE"
+    },
+    "meta": {
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "og:locale": "en_AU",
+      "og:locale:alternate": "en_GB",
+      "og:site_name": "Giantesque",
+      "og:title": "Giantesque",
+      "og:type": "website",
+      "og:url": "https://giantesque.com",
+      "og:description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "og:image": "",
+      "og:image:type": "",
+      "og:image:width": "",
+      "og:image:height": "",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@theundebruijn",
+      "twitter:creator": "@theundebruijn"
+    }
+  }
+}

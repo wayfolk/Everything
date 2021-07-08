@@ -1,0 +1,7 @@
+# copyright © 2020-present, Theun de Bruijn. all rights reserved.
+
+package-lock.json
+node_modules/
+_dev/
+_dist/
+_tmp/

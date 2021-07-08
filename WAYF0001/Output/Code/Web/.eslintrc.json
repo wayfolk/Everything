@@ -1,0 +1,30 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": false
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": false
+    }
+  },
+  "rules": {
+    "linebreak-style": ["error", "unix"],
+    "no-mixed-spaces-and-tabs": ["error"],
+    "no-trailing-spaces": ["error"],
+    "no-tabs": ["error"],
+    "indent": ["error", 2],
+    "semi": ["error", "always"],
+    "comma-style": ["warn", "last"],
+    "comma-dangle": ["warn", "always-multiline"],
+    "quotes": ["warn", "single"],
+    "no-duplicate-imports": ["error"],
+    "no-dupe-class-members": ["error"],
+    "new-parens": ["warn"],
+    "no-var": ["error"],
+    "prefer-const": ["warn"]
+  }
+}

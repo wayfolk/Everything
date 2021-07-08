@@ -1,0 +1,8 @@
+html {
+  scrollbar-width: none;  /* prevents an issue with window size calcs in firefox */
+}
+
+body {
+  margin: 0;
+  height: 100%;
+}
