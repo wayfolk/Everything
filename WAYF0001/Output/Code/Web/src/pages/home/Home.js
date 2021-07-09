@@ -133,10 +133,10 @@ class Home extends HTMLElement  {
     LOG.info('~/pages/home/Home :: intro');
 
 
-    const _stream = FRP.getStream('webglBackground:onchange');
+    // const _stream = FRP.getStream('webglBackground:onchange');
     // _stream({ sColor: 0xfdfbf8, nDuration: 3.500 });
-    // _stream({ sColor: 0xff0000, nDuration: 3.500 });
-    _stream({ sColor: 0xfffaf0, nDuration: 2.000 });
+    // // _stream({ sColor: 0xff0000, nDuration: 3.500 });
+    // _stream({ sColor: 0xfffaf0, nDuration: 2.000 });
 
     async.parallel([
       function (fCB) { this.oComponentInstances['_webgl'].intro(fCB, 0.00); }.bind(this),

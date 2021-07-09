@@ -10,7 +10,7 @@ import { DOM } from '~/_utils/DOM.js';
 import { CSS } from '~/_utils/CSS.js';
 import { LOG } from '~/_utils/LOG.js';
 
-import WebGLBackground from './webglBackground/WebGLBackground.js';
+// import WebGLBackground from './webglBackground/WebGLBackground.js';
 
 /// ASSETS CSS ///
 import sCSS from './Container.css';
@@ -111,8 +111,8 @@ class Container extends HTMLElement  {
     this.oDOMElements['domPageWrapper'] = DOM.create('div', { className: 'domPageWrapper' });
     DOM.append(this.oDOMElements['domPageWrapper'], this.shadow);
 
-    this.oDOMElements['domBackgroundWrapper'] = DOM.create('div', { className: 'domBackgroundWrapper' });
-    DOM.append(this.oDOMElements['domBackgroundWrapper'], this.shadow);
+    // this.oDOMElements['domBackgroundWrapper'] = DOM.create('div', { className: 'domBackgroundWrapper' });
+    // DOM.append(this.oDOMElements['domBackgroundWrapper'], this.shadow);
 
     fCB();
   };
@@ -120,10 +120,10 @@ class Container extends HTMLElement  {
   createComponentInstances(fCB) {
 
     async.series([
-      function (fCB) { this.oComponentInstances['_webglBackground'] = new WebGLBackground(fCB); }.bind(this),
+      // function (fCB) { this.oComponentInstances['_webglBackground'] = new WebGLBackground(fCB); }.bind(this),
     ], function (err, results) {
 
-      DOM.append(this.oComponentInstances['_webglBackground'], this.oDOMElements['domBackgroundWrapper']);
+      // DOM.append(this.oComponentInstances['_webglBackground'], this.oDOMElements['domBackgroundWrapper']);
 
       fCB();
     }.bind(this));

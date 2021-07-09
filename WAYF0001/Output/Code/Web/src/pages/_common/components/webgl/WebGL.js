@@ -67,7 +67,6 @@ class WebGL extends HTMLElement {
   };
 
   createEnvironment(fCB) {
-    console.warn(ENV);
     this.env = Object.create(null);
     this.env.bIsMobile = ENV.getGPU().isMobile;
     this.env.nGPUTier = ENV.getGPU().tier;
@@ -96,18 +95,18 @@ class WebGL extends HTMLElement {
     this.activePage = this.oOptions.sContent;
 
     this.resources = Object.create(null);
-    this.entities = { meshes: Object.create(null), lights: Object.create(null), helpers: Object.create(null) };
+    this.entities = { cameras: Object.create(null), meshes: Object.create(null), lights: Object.create(null), helpers: Object.create(null) };
     this.oTweens = Object.create(null);;
     this.oIntervals = Object.create(null);;
     this.mixer = null;
 
-    this.fAnimateToPositionInterval = null;
-    this.nAnimationToPositionCounter = 0;
-    this.aPositions = new Array(Object.create(null), Object.create(null), Object.create(null));
+    // this.fAnimateToPositionInterval = null;
+    // this.nAnimationToPositionCounter = 0;
+    // this.aPositions = new Array(Object.create(null), Object.create(null), Object.create(null));
 
-    this.aPositions[0] = { camera: { fov: 20, posX: -60, posY: -65, posZ: 95 }, target: { posX: 0, posY: 0, posZ: 0 } };
-    this.aPositions[1] = { camera: { fov: 20, posX: 100, posY: -6, posZ: 14 }, target: { posX: -9.5, posY: 2, posZ: 18.5 } };
-    this.aPositions[2] = { camera: { fov: 20, posX: 0, posY: -75, posZ: 102 }, target: { posX: 0, posY: 11.5, posZ: 5.5 } };
+    // this.aPositions[0] = { camera: { fov: 20, posX: -60, posY: -65, posZ: 95 }, target: { posX: 0, posY: 0, posZ: 0 } };
+    // this.aPositions[1] = { camera: { fov: 20, posX: 100, posY: -6, posZ: 14 }, target: { posX: -9.5, posY: 2, posZ: 18.5 } };
+    // this.aPositions[2] = { camera: { fov: 20, posX: 0, posY: -75, posZ: 102 }, target: { posX: 0, posY: 11.5, posZ: 5.5 } };
 
 
     fCB();
@@ -210,8 +209,8 @@ class WebGL extends HTMLElement {
 
     // TODO: move this to createDmomElements node
     // this.oDOMElements['domNavTEST'] = DOM.create('div', { className: 'domNavTEST' });
-    this.domFilter = DOM.create('div', { className: 'domFilter' });
-    DOM.append(this.domFilter, this.shadow);
+    // this.domFilter = DOM.create('div', { className: 'domFilter' });
+    // DOM.append(this.domFilter, this.shadow);
 
     fCB();
   };
@@ -226,8 +225,8 @@ class WebGL extends HTMLElement {
 
     this.createIntervals();
 
-    this.camera.fov = this.aPositions[0].camera.fov;
-    this.camera.updateProjectionMatrix();
+    // this.camera.fov = this.aPositions[0].camera.fov;
+    // this.camera.updateProjectionMatrix();
 
 
     let sFilterColor, nFilterOpacity;
@@ -242,62 +241,62 @@ class WebGL extends HTMLElement {
       sFilterColor = '#191919'; nFilterOpacity = 0.0;
     };
 
-    this.oTweens['domFilterIntro'] = TweenMax.to(this.domFilter, 5.000, {
-      css: { backgroundColor: sFilterColor, opacity: nFilterOpacity }, delay: nDelay, ease: Linear.easeNone, onComplete: function () {}.bind(this),
-    });
+    // this.oTweens['domFilterIntro'] = TweenMax.to(this.domFilter, 5.000, {
+      // css: { backgroundColor: sFilterColor, opacity: nFilterOpacity }, delay: nDelay, ease: Linear.easeNone, onComplete: function () {}.bind(this),
+    // });
 
 
     // TODO : create a separate intro position (just for another world awaits ?)
 
-    this.oTweens['cameraIntro'] = TweenMax.fromTo(this.camera.position, 2.000, {
-      x: this.aPositions[0].camera.posX / 3, y: this.aPositions[0].camera.posY / 3, z: this.aPositions[0].camera.posZ / 3,
-    }, {
-      x: this.aPositions[0].camera.posX, y: this.aPositions[0].camera.posY, z: this.aPositions[0].camera.posZ,
-      delay: nDelay, ease: Sine.easeOut, onComplete: function() {}.bind(this),
-    });
+    // this.oTweens['cameraIntro'] = TweenMax.fromTo(this.camera.position, 2.000, {
+    //   x: this.aPositions[0].camera.posX / 3, y: this.aPositions[0].camera.posY / 3, z: this.aPositions[0].camera.posZ / 3,
+    // }, {
+    //   x: this.aPositions[0].camera.posX, y: this.aPositions[0].camera.posY, z: this.aPositions[0].camera.posZ,
+    //   delay: nDelay, ease: Sine.easeOut, onComplete: function() {}.bind(this),
+    // });
 
-    this.oTweens['domCanvasIntro'] = TweenMax.to(this.domCanvas, 2.000, {
-      opacity: 1.0, delay: nDelay, ease: Linear.easeNone, onComplete: function() {
-        LOG.info('~/pages/_common/components/webgl/WebGL :: intro (complete)');
+    // this.oTweens['domCanvasIntro'] = TweenMax.to(this.domCanvas, 2.000, {
+      // opacity: 1.0, delay: nDelay, ease: Linear.easeNone, onComplete: function() {
+        // LOG.info('~/pages/_common/components/webgl/WebGL :: intro (complete)');
 
-        this.controls.enabled = true;
+        // this.controls.enabled = true;
 
         fCB();
-      }.bind(this),
-    });
+      // }.bind(this),
+    // });
   };
 
   outro(fCB) {
     LOG.info('~/pages/_common/components/webgl/WebGL :: outro');
 
-    this.controls.enabled = false;
+    // this.controls.enabled = false;
 
 
-    this.oTweens['domFilterOutro'] = TweenMax.to(this.domFilter, 1.000, {
-      css: { opacity: 0.0 }, ease: Linear.easeNone, onComplete: function () { }.bind(this),
-    });
+    // this.oTweens['domFilterOutro'] = TweenMax.to(this.domFilter, 1.000, {
+    //   css: { opacity: 0.0 }, ease: Linear.easeNone, onComplete: function () { }.bind(this),
+    // });
 
 
 
-    this.oTweens['cameraOutroX'] = TweenMax.to(this.camera.position, 2.000, {
-      x: this.camera.position.x * 3, ease: Sine.easeIn, onComplete: function() {}.bind(this),
-    });
+    // this.oTweens['cameraOutroX'] = TweenMax.to(this.camera.position, 2.000, {
+    //   x: this.camera.position.x * 3, ease: Sine.easeIn, onComplete: function() {}.bind(this),
+    // });
 
-    this.oTweens['cameraOutroY'] = TweenMax.to(this.camera.position, 2.000, {
-      y: this.camera.position.y * 3, ease: Sine.easeIn, onComplete: function() {}.bind(this),
-    });
+    // this.oTweens['cameraOutroY'] = TweenMax.to(this.camera.position, 2.000, {
+    //   y: this.camera.position.y * 3, ease: Sine.easeIn, onComplete: function() {}.bind(this),
+    // });
 
-    this.oTweens['cameraOutroZ'] = TweenMax.to(this.camera.position, 2.000, {
-      z: this.camera.position.z * 3, ease: Sine.easeIn, onComplete: function() {}.bind(this),
-    });
+    // this.oTweens['cameraOutroZ'] = TweenMax.to(this.camera.position, 2.000, {
+    //   z: this.camera.position.z * 3, ease: Sine.easeIn, onComplete: function() {}.bind(this),
+    // });
 
-    this.oTweens['domCanvasOutro'] = TweenMax.to(this.domCanvas, 1.000, {
-      opacity: 0.0, delay: 0.000, ease: Linear.easeNone, onComplete: function() {
-        LOG.info('~/pages/_common/components/webgl/WebGL :: outro (complete)');
+    // this.oTweens['domCanvasOutro'] = TweenMax.to(this.domCanvas, 1.000, {
+    //   opacity: 0.0, delay: 0.000, ease: Linear.easeNone, onComplete: function() {
+    //     LOG.info('~/pages/_common/components/webgl/WebGL :: outro (complete)');
 
-        setTimeout(function() { fCB(); }, 50); // slight extra delay before we proceed
-      }.bind(this),
-    });
+    //     setTimeout(function() { fCB(); }, 50); // slight extra delay before we proceed
+    //   }.bind(this),
+    // });
 
   };
 
@@ -311,26 +310,26 @@ class WebGL extends HTMLElement {
 
     // this.controls.target.set(targetX, targetY, targetZ);
 
-    this.controls.enabled = false;
+    // this.controls.enabled = false;
 
-    this.camera.fov = this.aPositions[nPosition].camera.fov;
+    // this.camera.fov = this.aPositions[nPosition].camera.fov;
 
-    this.oTweens['controlsIntro'] = TweenMax.to(this.controls.target, 2.500, {
-      x: this.aPositions[nPosition].target.posX, y: this.aPositions[nPosition].target.posY, z: this.aPositions[nPosition].target.posZ,
-      ease: Sine.easeInOut, onComplete: function() {}.bind(this),
-    });
+    // this.oTweens['controlsIntro'] = TweenMax.to(this.controls.target, 2.500, {
+      // x: this.aPositions[nPosition].target.posX, y: this.aPositions[nPosition].target.posY, z: this.aPositions[nPosition].target.posZ,
+      // ease: Sine.easeInOut, onComplete: function() {}.bind(this),
+    // });
 
-    this.oTweens['cameraIntro'] = TweenMax.to(this.camera.position, 5.000, {
-      x: this.aPositions[nPosition].camera.posX, y: this.aPositions[nPosition].camera.posY, z: this.aPositions[nPosition].camera.posZ,
-      ease: Sine.easeInOut, onComplete: function() {
+    // this.oTweens['cameraIntro'] = TweenMax.to(this.camera.position, 5.000, {
+      // x: this.aPositions[nPosition].camera.posX, y: this.aPositions[nPosition].camera.posY, z: this.aPositions[nPosition].camera.posZ,
+      // ease: Sine.easeInOut, onComplete: function() {
 
-        const stream = FRP.getStream('loader:onchange');
-        stream('outro');
+        // const stream = FRP.getStream('loader:onchange');
+        // stream('outro');
 
-        this.controls.enabled = true;
+        // this.controls.enabled = true;
 
-      }.bind(this),
-    });
+      // }.bind(this),
+    // });
   };
 
   createThree(fCB) {
@@ -354,7 +353,7 @@ class WebGL extends HTMLElement {
   createCamera() {
     this.camera = new THREE.PerspectiveCamera(45, this.domCanvas.clientWidth / this.domCanvas.clientHeight, 1, 10000);
     this.camera.fov = 20;
-    this.camera.position.set(0, 0, 0);
+    this.camera.position.set(-60, -65, 90);
 
     this.camera.updateProjectionMatrix();
   };
@@ -398,25 +397,19 @@ class WebGL extends HTMLElement {
       this.renderer.setPixelRatio(1.5);
       this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     };
-
-
-    console.warn('bIsMobile: ' + this.env.bIsMobile);
-    console.warn('nGPUTier: ' + this.env.nGPUTier);
   };
-
-
 
   createControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.04;
+    // this.controls.dampingFactor = 0.04;
     this.controls.zoomSpeed = 0.75;
 
-    if (process.env.NODE_ENV === 'production') {
-      this.controls.enablePan = false;
-    };
+    // if (process.env.NODE_ENV === 'production') {
+      // this.controls.enablePan = false;
+    // };
 
-    this.controls.enabled = false;
+    // this.controls.enabled = true;
   };
 
   createBundledEntities() {
@@ -530,29 +523,29 @@ class WebGL extends HTMLElement {
   };
 
   loadResources(fCB) {
-    const resourceLoader = new ResourceLoader();
+    const resourceLoader = new ResourceLoader('', 10);
+
     const gltfLoader = new GLTFLoader();
+
     this.dracoLoader = new DRACOLoader(); // class scope reference so we can dispose it.
     this.dracoLoader.setDecoderPath('/static/draco/');
-    this.dracoLoader.setWorkerLimit(10);
+    this.dracoLoader.setWorkerLimit(1);
     this.dracoLoader.preload();
+
     gltfLoader.setDRACOLoader(this.dracoLoader);
 
-    resourceLoader.add('glft_scene', test_scene_0001, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
+    resourceLoader.add('gltf', test_scene_0001, { loadType: Resource.LOAD_TYPE.XHR, xhrType: Resource.XHR_RESPONSE_TYPE.BUFFER });
 
     resourceLoader.use(function(resource, next) {
+      gltfLoader.parse(resource.data, '', function (gltf) {
+        this.resources[resource.name] = gltf;
+        next();
+      }.bind(this));
 
-      if (resource.extension === 'glb') {
-        gltfLoader.parse(resource.data, '', function (gltf) {
-          // console.log(gltf);
-          this.resources[resource.name] = gltf;
-
-          next();
-        }.bind(this));
-      }
     }.bind(this));
 
     resourceLoader.load(function(resourceLoader, resources) {
+      console.log(resources);
       fCB();
     }.bind(this));
   };
@@ -581,57 +574,126 @@ class WebGL extends HTMLElement {
   };
 
   createLoadedEntities() {
-    // console.log(this.resources['glft_scene']);
+    // console.log(this.resources['gltf'].scene.children);
 
     // TODO: store the camera(s) incl. 'default cam
     // TODO: switch between the cameras at will
 
     // cameras
-    for (let i = 0; i < this.resources['glft_scene'].cameras.length; i++) {
-      this.scene.add(this.resources['glft_scene'].cameras[i]);
-    }
+    // for (let i = 0; i < this.resources['glft_scene'].cameras.length; i++) {
+    //   const element = this.resources['glft_scene'].cameras[i];
+    //   console.log('GLTF CAMERA');
+    //   console.log(element);
+    //   this.entities.cameras[element.userData.name] = element;
+    // //   // this.scene.add(this.entities.cameras[element.userData.name]);
+
+    // //   // console.log('imported camera:');
+    // //   // console.log(this.entities.cameras[element.userData.name]);
+
+    // //   // console.log('default cam:');
+    // //   // console.log(this.camera);
+    // //   // console.log(this.camera.position);
+    // //   // console.log('imported cam:');
+    // //   // console.log( this.entities.cameras[element.userData.name]);
+    // //   // console.log( this.entities.cameras[element.userData.name].position);
+    //   this.camera = this.entities.cameras[element.userData.name];
+    //   this.camera.updateProjectionMatrix();
+
+    // }
+
+    // console.log(this.resources['glft_scene']);
+
+    for (let i = 0; i < this.resources['gltf'].scene.children.length; i++) {
+      console.log(i);
+      const child = this.resources['gltf'].scene.children[i];
+    //   console.log(element);
+
+    //   if (element.userData.type === 'perspectiveCamera') {
+
+    //     console.log('imported camera:');
+    //     console.log(element);
+
+    //   //   const new_camera = new THREE.PerspectiveCamera(element.userData.fov, this.domCanvas.clientWidth / this.domCanvas.clientHeight, 1, 10000);
+    //   //   new_camera.position.copy(element.position);
+
+    //   //   new_camera.position.x = element.position.x;
+    //   //   new_camera.position.y = element.position.y;
+    //   //   new_camera.position.z = -element.position.z;
 
 
-    for (let i = 0; i < this.resources['glft_scene'].scene.children.length; i++) {
-      const element = this.resources['glft_scene'].scene.children[i];
-      console.log(element);
+    //   //   // new_camera.rotation.x = element.rotation.x;
+    //   //   // new_camera.rotation.y = element.rotation.y;
+    //   //   // new_camera.rotation.z = element.rotation.z;
+    //   //   // new_camera.quaternion.copy(element.quaternion);
 
-      // meshes
-      if (element.userData.type === 'mesh') {
-        this.scene.add(this.resources['glft_scene'].scene.children[i]);
+    //   //   // new_camera.quaternion.w = -element.quaternion.w;
+    //   //   // new_camera.quaternion.x = -element.quaternion.x;
+    //   //   // new_camera.quaternion.y = -element.quaternion.y;
+    //   //   // new_camera.quaternion.z = element.quaternion.z;
+
+    //   //   new_camera.updateProjectionMatrix();
+
+    //   //   this.entities.cameras[element.userData.name] = new_camera;
+    //   //   this.scene.add(this.entities.cameras[element.userData.name]);
+
+    //   //   this.camera = this.entities.cameras[element.userData.name];
+
+    //   //   console.log(this.entities.cameras[element.userData.name].position);
+    //   //   console.log(this.entities.cameras[element.userData.name].quaternion);
+
+    //   //   // console.log('created camera:');
+    //   //   // console.log(this.entities.cameras[element.userData.name]);
+    //   }
+
+    //   // meshes
+      if (child.userData.type === 'mesh') {
+        console.log('HITTTTT');
+        // console.log(this.resources['gltf'].scene.children[i]);
+
+        // TODO:  make this more elegant
+        const new_mesh = new THREE.Object3D();
+        new_mesh.children[0] = child;
+        console.log(new_mesh);
+        this.scene.add(new_mesh)
+//
+
+      //   this.entities.meshes[this.resources['gltf'].scene.children[i].userData.name] = this.resources['gltf'].scene.children[i];
+      //   this.scene.add(this.entities.meshes[this.resources['gltf'].scene.children[i].userData.name]);
       }
 
-      // pointLights
-      else if (element.userData.type === 'pointLight') {
-        this.entities.lights['pointLight'] = new THREE.PointLight(new THREE.Color(element.userData.color), element.userData.power, 500, 2.0);
-        this.entities.lights['pointLight'].position.copy(element.position);
-        this.entities.lights['pointLight'].castShadow = true;
-        this.entities.lights['pointLight'].shadow.bias = -0.0005;
+    //   // pointLights
+      else if (child.userData.type === 'pointLight') {
+        const new_light = new THREE.PointLight(new THREE.Color(child.userData.color), child.userData.power, 500, 2.0);
+
+        new_light.position.copy(child.position);
+        new_light.rotation.copy(child.rotation);
+    //     // new_light.quaternion.copy(element.quaternion);
+        new_light.castShadow = true;
+        new_light.shadow.bias = -0.0005;
 
         if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
-          this.entities.lights['pointLight'].shadow.mapSize.width = 2048;
-          this.entities.lights['pointLight'].shadow.mapSize.height = 2048;
+          new_light.shadow.mapSize.width = 2048;
+          new_light.shadow.mapSize.height = 2048;
 
         } else {
-          this.entities.lights['pointLight'].shadow.mapSize.width = 512;
-          this.entities.lights['pointLight'].shadow.mapSize.height = 512;
+          new_light.shadow.mapSize.width = 512;
+          new_light.shadow.mapSize.height = 512;
         };
 
-        this.entities.lights['pointLight'].updateMatrixWorld(true);
-        this.scene.add(this.entities.lights['pointLight']);
+        new_light.updateMatrixWorld(true);
+
+    //     this.entities.lights[element.userData.name] = new_light;
+        // this.scene.add(this.entities.lights[element.userData.name]);
+        this.scene.add(new_light);
       }
-
     }
-
-    console.log(this.scene);
-
   };
 
   createLoadedEntityTweens() {};
 
   createGui() {
 
-    this.gui = new Pane();
+    this.gui = new Pane({ title: 'Wayfolk Studio', expanded: true });
     this.gui.registerPlugin(EssentialsPlugin);
     this.gui.registerPlugin(CamerakitPlugin);
 
@@ -647,9 +709,20 @@ class WebGL extends HTMLElement {
     const gui_folder_renderSettings = this.gui.addFolder({ title: 'Render Settings', expanded: true });
 
     this.gui_renderSettings = {
-      pixelRatio :  this.renderer.getPixelRatio(),
+      isMobile: this.env.bIsMobile.toString(),
+      gpu : this.env.sGPU,
+      gpuTier : this.env.nGPUTier,
+      shadowMap : this.renderer.shadowMap.type,
+      anisotropy: this.renderer.capabilities.getMaxAnisotropy(),
+      pixelRatio : this.renderer.getPixelRatio(),
       pauseRenderer : false,
     };
+
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'isMobile', { label: 'isMobile', disabled: true });
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'gpu', { label: 'gpu', disabled: true });
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'gpuTier', { label: 'gpuTier', disabled: true });
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'shadowMap', { label: 'shadowMap', disabled: true });
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'anisotropy', { label: 'anisotropy', disabled: true });
 
     gui_folder_renderSettings.addInput(this.gui_renderSettings, 'pixelRatio', {
       label: 'hidpi', min: 0.5, max: 5.0, step: 0.1 },
@@ -661,11 +734,11 @@ class WebGL extends HTMLElement {
       label : 'pause' }
     ).on('change', function(e) {
       if (e.value === true) {
-        this.controls.enabled = false;
+        // this.controls.enabled = false;
         for (const tween in this.oTweens) { this.oTweens[tween].pause(); };
         this.renderer.setAnimationLoop(null);
       } else {
-        this.controls.enabled = true;
+        // this.controls.enabled = true;
         for (const tween in this.oTweens) { this.oTweens[tween].resume(); };
         this.renderer.setAnimationLoop(this.tick.bind(this));
       }
@@ -684,7 +757,7 @@ class WebGL extends HTMLElement {
 
     this.gui_cameraSettings = {
       camera_position: { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z },
-      target_position: { x: this.controls.target.x, y: this.controls.target.y, z: this.controls.target.z },
+      camera_rotation: { x: this.camera.rotation.x, y: this.camera.rotation.y, z: this.camera.rotation.z },
       fov: this.camera.fov,
     };
 
@@ -692,9 +765,21 @@ class WebGL extends HTMLElement {
       label : 'pos', x: { min: -1000, max: 1000, step: 0.01 }, y: { min: -1000, max: 1000, step: 0.01 }, z: { min: -1000, max: 1000, step: 0.01 },
     });
 
-    gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'target_position', {
-      label : 'target', x: { min: -1000, max: 1000, step: 0.01 }, y: { min: -1000, max: 1000, step: 0.01 }, z: { min: -1000, max: 1000, step: 0.01 },
+    gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'camera_rotation', {
+      label: 'rot', x: { min: -1000, max: 1000, step: 0.01 }, y: { min: -1000, max: 1000, step: 0.01 }, z: { min: -1000, max: 1000, step: 0.01 },
     });
+
+    // gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'camera_rotation', {
+    //   label : 'rot', x: { min: -1000, max: 1000, step: 0.01 }, y: { min: -1000, max: 1000, step: 0.01 }, z: { min: -1000, max: 1000, step: 0.01 },
+    // }).on('change', function(e) {
+    //   // console.log(e.value);
+
+    //   // this.camera.rotation.set(e.value);
+    // }.bind(this));
+
+    // gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'target_position', {
+    //   label : 'target', x: { min: -1000, max: 1000, step: 0.01 }, y: { min: -1000, max: 1000, step: 0.01 }, z: { min: -1000, max: 1000, step: 0.01 },
+    // });
 
     gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'fov', {
       label : 'fov', min: 1, max: 180, step: 0.01, view: 'cameraring', series: 1 },
@@ -760,9 +845,15 @@ class WebGL extends HTMLElement {
     this.gui_cameraSettings.camera_position.y = this.camera.position.y;
     this.gui_cameraSettings.camera_position.z = this.camera.position.z;
 
-    this.gui_cameraSettings.target_position.x = this.controls.target.x;
-    this.gui_cameraSettings.target_position.y = this.controls.target.y;
-    this.gui_cameraSettings.target_position.z = this.controls.target.z;
+    this.gui_cameraSettings.camera_rotation.x = this.camera.rotation.x;
+    this.gui_cameraSettings.camera_rotation.y = this.camera.rotation.y;
+    this.gui_cameraSettings.camera_rotation.z = this.camera.rotation.z;
+
+    this.gui_cameraSettings.fov = this.camera.fov;
+    // console.log(this.camera.rotation);
+    // this.gui_cameraSettings.target_position.x = this.controls.target.x;
+    // this.gui_cameraSettings.target_position.y = this.controls.target.y;
+    // this.gui_cameraSettings.target_position.z = this.controls.target.z;
     // console.log(this.gui_cameraSettings.position.x);
     // update dat.gui
     // if (this.cameraSettingsOptions) this.cameraSettingsOptions.pos_x = this.camera.position.x;
@@ -788,13 +879,13 @@ class WebGL extends HTMLElement {
   };
 
   createIntervals() {
-    this.oIntervals['animateToPositionInterval'] = setInterval(this.animateToPositionIntervallCall.bind(this), 30 * 1000);
+    // this.oIntervals['animateToPositionInterval'] = setInterval(this.animateToPositionIntervallCall.bind(this), 30 * 1000);
   };
 
   animateToPositionIntervallCall() {
-    this.nAnimationToPositionCounter++;
-    if (this.nAnimationToPositionCounter > this.aPositions.length -1) { this.nAnimationToPositionCounter = 0; };
-    this.animateToPosition(this.nAnimationToPositionCounter);
+    // this.nAnimationToPositionCounter++;
+    // if (this.nAnimationToPositionCounter > this.aPositions.length -1) { this.nAnimationToPositionCounter = 0; };
+    // this.animateToPosition(this.nAnimationToPositionCounter);
   };
 
 
