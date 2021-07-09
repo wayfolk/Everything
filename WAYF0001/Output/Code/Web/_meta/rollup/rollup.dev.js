@@ -63,7 +63,7 @@ export default {
           dest: './_dev/static',
         },
         {
-          src: './_meta/assets/benchmarks/20210704/',
+          src: './_meta/assets/benchmarks/20210704/*',
           dest: './_dev/static/benchmarks',
         },
         {

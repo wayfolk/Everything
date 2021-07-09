@@ -67,6 +67,7 @@ class WebGL extends HTMLElement {
   };
 
   createEnvironment(fCB) {
+    console.warn(ENV);
     this.env = Object.create(null);
     this.env.bIsMobile = ENV.getGPU().isMobile;
     this.env.nGPUTier = ENV.getGPU().tier;
@@ -397,7 +398,13 @@ class WebGL extends HTMLElement {
       this.renderer.setPixelRatio(1.5);
       this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     };
+
+
+    console.warn('bIsMobile: ' + this.env.bIsMobile);
+    console.warn('nGPUTier: ' + this.env.nGPUTier);
   };
+
+
 
   createControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -645,7 +652,7 @@ class WebGL extends HTMLElement {
     };
 
     gui_folder_renderSettings.addInput(this.gui_renderSettings, 'pixelRatio', {
-      label: 'hdpi', min: 0.5, max: 5.0, step: 0.5 }
+      label: 'hidpi', min: 0.5, max: 5.0, step: 0.1 },
     ).on('change', function(e) {
       this.renderer.setPixelRatio(e.value);
     }.bind(this));

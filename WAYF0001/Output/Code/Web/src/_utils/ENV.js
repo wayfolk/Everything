@@ -19,7 +19,7 @@ const ENV = Object.create(null);
 ///////////////////////
 
 ENV.detectGPU = async function (fCB) {
-  this.gpu = await getGPUTier({ benchmarksURL: '/static/benchmarks/2020.11.20' });
+  this.gpu = await getGPUTier({ benchmarksURL: '/static/benchmarks' });
   fCB();
 };
 
