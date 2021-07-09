@@ -9,13 +9,15 @@
   },
   "dependencies": {
     "async": "3.2.0",
-    "dat.gui": "0.7.7",
     "detect-gpu": "3.1.7",
     "flyd": "0.2.8",
     "gsap": "3.7.0",
     "loglevel": "1.7.1",
     "resource-loader": "3.0.1",
-    "three": "0.130.1"
+    "three": "0.130.1",
+    "tweakpane": "3.0.2",
+    "@tweakpane/plugin-essentials": "0.1.0",
+    "@tweakpane/plugin-camerakit": "0.2.0"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "3.1.2",

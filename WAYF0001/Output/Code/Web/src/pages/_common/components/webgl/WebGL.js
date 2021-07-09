@@ -6,12 +6,14 @@
 import async from 'async';
 import { TweenMax, Linear, Sine } from 'gsap';
 import { Loader as ResourceLoader, Resource } from 'resource-loader';
-import * as dat from 'dat.gui';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Reflector } from 'three/examples/jsm/objects/Reflector';
+import {Pane} from 'tweakpane';
+import * as EssentialsPlugin from '@tweakpane/plugin-essentials';
+import * as CamerakitPlugin from '@tweakpane/plugin-camerakit';
 
 /// LOCAL ///
 import { FRP } from '~/_utils/FRP.js';
@@ -614,30 +616,47 @@ class WebGL extends HTMLElement {
 
     }
 
-    console.log(this.scene)
+    console.log(this.scene);
 
   };
 
   createLoadedEntityTweens() {};
 
   createGui() {
-    this.gui = new dat.GUI({ autoPlace: true });
-    this.gui['close'](); // start in closed state
 
-    const folder_renderSettings = this.gui['addFolder']('Render Settings');
-    folder_renderSettings.open();
+    this.gui = new Pane();
+    this.gui.registerPlugin(EssentialsPlugin);
+    this.gui.registerPlugin(CamerakitPlugin);
 
-    const renderSettingsOptions = {
-      pauseRenderer: false,
-      pixelRatio: this.renderer.getPixelRatio(),
+    /// FPS ///
+    this.gui_graph_fps = this.gui.addBlade({
+      view: 'fpsgraph',
+      label: 'fps',
+      lineCount: 2,
+    });
+
+
+    /// RENDER SETTINGS ///
+    const gui_folder_renderSettings = this.gui.addFolder({ title: 'Render Settings', expanded: true });
+
+    this.gui_renderSettings = {
+      pixelRatio :  this.renderer.getPixelRatio(),
+      pauseRenderer : false,
     };
 
-    folder_renderSettings.add(renderSettingsOptions, 'pauseRenderer').name('Pause Renderer').onChange(function(value) {
-      if (value === true) {
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'pixelRatio', {
+      label: 'hdpi', min: 0.5, max: 5.0, step: 0.5 }
+    ).on('change', function(e) {
+      this.renderer.setPixelRatio(e.value);
+    }.bind(this));
+
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'pauseRenderer', {
+      label : 'pause' }
+    ).on('change', function(e) {
+      if (e.value === true) {
         this.controls.enabled = false;
         for (const tween in this.oTweens) { this.oTweens[tween].pause(); };
         this.renderer.setAnimationLoop(null);
-
       } else {
         this.controls.enabled = true;
         for (const tween in this.oTweens) { this.oTweens[tween].resume(); };
@@ -645,86 +664,68 @@ class WebGL extends HTMLElement {
       }
     }.bind(this));
 
-
-    folder_renderSettings.add(renderSettingsOptions, 'pixelRatio').min(1).max(10).step(.1).onChange(function(value) { this.renderer.setPixelRatio(value); }.bind(this));
-
-    const folder_cameraSettings = this.gui['addFolder']('Camera Settings');
-    folder_cameraSettings.open();
-
-    this.cameraSettingsOptions = {
-      pos_x: this.camera.position.x,
-      pos_y: this.camera.position.y,
-      pos_z: this.camera.position.z,
-      fov: this.camera.fov,
-    };
-
-    // values are updated in the render tick
-
-    folder_cameraSettings.add(this.cameraSettingsOptions, 'fov').name('FOV').min(1).max(180).step(1).listen().onChange(function(value) {
-      this.camera.fov = value;
-      this.camera.updateProjectionMatrix();
-    }.bind(this));
-
-    folder_cameraSettings.add(this.cameraSettingsOptions, 'pos_x').name('pos X').min(-1000).max(1000).step(.01).listen().onChange(function(value) { this.camera.position.x = value; }.bind(this));
-    folder_cameraSettings.add(this.cameraSettingsOptions, 'pos_y').name('pos Y').min(-1000).max(1000).step(.01).listen().onChange(function(value) { this.camera.position.y = value; }.bind(this));
-    folder_cameraSettings.add(this.cameraSettingsOptions, 'pos_z').name('pos Z').min(-1000).max(1000).step(.01).listen().onChange(function(value) { this.camera.position.z = value; }.bind(this));
-
-    const folder_constrolsTarget = this.gui['addFolder']('Controls Target');
-    folder_constrolsTarget.open();
-
-    this.controlsTargetOptions = {
-      x: this.controls.target.x,
-      y: this.controls.target.y,
-      z: this.controls.target.z,
-    };
-
-    // values are updated in the render tick
-
-    folder_constrolsTarget.add(this.controlsTargetOptions, 'x').name('X').min(-1000).max(1000).step(.01).listen().onChange(function(value) { this.controls.target.x = value; }.bind(this));
-    folder_constrolsTarget.add(this.controlsTargetOptions, 'y').name('Y').min(-1000).max(1000).step(.01).listen().onChange(function(value) { this.controls.target.y = value; }.bind(this));
-    folder_constrolsTarget.add(this.controlsTargetOptions, 'z').name('Z').min(-1000).max(1000).step(.01).listen().onChange(function(value) { this.controls.target.z = value; }.bind(this));
-
-    const folder_studioSettings = this.gui['addFolder']('Studio Settings');
-    folder_studioSettings.open();
-
-    const studioSettingsOptions = {
-      show_helpers: false,
-      bgColour: '#00b140', // classic green screen
-      bgOpacity: 0,
-    };
-
-    folder_studioSettings.add(studioSettingsOptions, 'show_helpers').name('THREE Helpers').onChange(function(value) {
-      for (const helper in this.entities.helpers) {
-        this.entities.helpers[helper].visible = value;
-      }
-    }.bind(this));
-
-    const obj = { grab_frameBuffer: function() {
+    gui_folder_renderSettings.addButton({ title: 'grab framebuffer' }).on('click', function(e) {
       const dataURL = this.domCanvas.toDataURL('image/png');
       const newTab = window.open();
       newTab.document.body.style.margin = '0px';
       newTab.document.body.innerHTML = '<img src="'+ dataURL +'">';
-    }.bind(this)};
+    }.bind(this));
 
-    this.gui['add'](obj, 'grab_frameBuffer').name('grab framebuffer');
 
+    /// CAMERA SETTINGS ///
+    const gui_folder_cameraSettings = this.gui.addFolder({ title: 'Camera Settings', expanded: true });
+
+    this.gui_cameraSettings = {
+      camera_position: { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z },
+      target_position: { x: this.controls.target.x, y: this.controls.target.y, z: this.controls.target.z },
+      fov: this.camera.fov,
+    };
+
+    gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'camera_position', {
+      label : 'pos', x: { min: -1000, max: 1000, step: 0.01 }, y: { min: -1000, max: 1000, step: 0.01 }, z: { min: -1000, max: 1000, step: 0.01 },
+    });
+
+    gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'target_position', {
+      label : 'target', x: { min: -1000, max: 1000, step: 0.01 }, y: { min: -1000, max: 1000, step: 0.01 }, z: { min: -1000, max: 1000, step: 0.01 },
+    });
+
+    gui_folder_cameraSettings.addInput(this.gui_cameraSettings, 'fov', {
+      label : 'fov', min: 1, max: 180, step: 0.01, view: 'cameraring', series: 1 },
+    ).on('change', function(e) {
+      this.camera.fov = e.value;
+      this.camera.updateProjectionMatrix();
+    }.bind(this));
+
+
+    /// STUDIO SETTINGS ///
+    const gui_folder_studioSettings = this.gui.addFolder({ title: 'Studio Settings', expanded: true });
+
+    this.gui_studioSettings = {
+      showHelpers : true,
+    };
+
+    gui_folder_studioSettings.addInput(this.gui_studioSettings, 'showHelpers', { label : 'helpers' }).on('change', function(e) {
+      for (const helper in this.entities.helpers) {
+        this.entities.helpers[helper].visible = e.value;
+      }
+    }.bind(this));
   };
 
   createHelpers() {
     this.entities.helpers['axesHelper'] = new THREE.AxesHelper(25);
-    this.entities.helpers['axesHelper'].visible = false;
+    this.entities.helpers['axesHelper'].visible = true;
     this.scene.add(this.entities.helpers['axesHelper']);
 
     this.entities.helpers['gridHelper'] = new THREE.GridHelper(100, 10, 0x808080, 0x808080);
     this.entities.helpers['gridHelper'].position.y = 0;
     this.entities.helpers['gridHelper'].position.x = 0;
-    this.entities.helpers['gridHelper'].visible = false;
+    this.entities.helpers['gridHelper'].visible = true;
     this.scene.add(this.entities.helpers['gridHelper']);
 
     this.entities.helpers['polarGridHelper'] = new THREE.PolarGridHelper(200, 16, 8, 64, 0x808080, 0x808080);
     this.entities.helpers['polarGridHelper'].position.y = 0;
     this.entities.helpers['polarGridHelper'].position.x = 0;
-    this.entities.helpers['polarGridHelper'].visible = false;
+    this.entities.helpers['polarGridHelper'].visible = true;
     this.scene.add(this.entities.helpers['polarGridHelper']);
 
     // this.entities.helpers['pointLightHelper'] = new THREE.PointLightHelper(this.entities.lights['pointLight'], 1.0, 0x808080);
@@ -737,26 +738,46 @@ class WebGL extends HTMLElement {
   };
 
   tick() {
+    this.gui_graph_fps.begin();
 
     // LOG.info(this.camera.fov)
     // update controls
     this.controls.update();
 
-    // update dat.gui
-    if (this.cameraSettingsOptions) this.cameraSettingsOptions.pos_x = this.camera.position.x;
-    if (this.cameraSettingsOptions) this.cameraSettingsOptions.pos_y = this.camera.position.y;
-    if (this.cameraSettingsOptions) this.cameraSettingsOptions.pos_z = this.camera.position.z;
+    // update gui
 
-    if (this.controlsTargetOptions) this.controlsTargetOptions.x = this.controls.target.x;
-    if (this.controlsTargetOptions) this.controlsTargetOptions.y = this.controls.target.y;
-    if (this.controlsTargetOptions) this.controlsTargetOptions.z = this.controls.target.z;
+    // console.log(this.bla);
+
+    // this.bla.
+    this.gui_cameraSettings.camera_position.x = this.camera.position.x;
+    this.gui_cameraSettings.camera_position.y = this.camera.position.y;
+    this.gui_cameraSettings.camera_position.z = this.camera.position.z;
+
+    this.gui_cameraSettings.target_position.x = this.controls.target.x;
+    this.gui_cameraSettings.target_position.y = this.controls.target.y;
+    this.gui_cameraSettings.target_position.z = this.controls.target.z;
+    // console.log(this.gui_cameraSettings.position.x);
+    // update dat.gui
+    // if (this.cameraSettingsOptions) this.cameraSettingsOptions.pos_x = this.camera.position.x;
+    // if (this.cameraSettingsOptions) this.cameraSettingsOptions.pos_y = this.camera.position.y;
+    // if (this.cameraSettingsOptions) this.cameraSettingsOptions.pos_z = this.camera.position.z;
+
+    // if (this.controlsTargetOptions) this.controlsTargetOptions.x = this.controls.target.x;
+    // if (this.controlsTargetOptions) this.controlsTargetOptions.y = this.controls.target.y;
+    // if (this.controlsTargetOptions) this.controlsTargetOptions.z = this.controls.target.z;
 
     // update animations
     // const delta = this.clock.getDelta();
     // if (this.mixer !== null) this.mixer.update(delta);
 
+
+
     // update renderer
     this.renderer.render(this.scene, this.camera);
+
+    this.gui_graph_fps.end();
+
+    this.gui.refresh();
   };
 
   createIntervals() {
@@ -817,7 +838,7 @@ class WebGL extends HTMLElement {
   };
 
   removeGui() {
-    this.gui['destroy']();
+    // this.gui['destroy']();
   };
 
   removeLoaders() {

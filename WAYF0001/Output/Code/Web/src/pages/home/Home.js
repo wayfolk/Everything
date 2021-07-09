@@ -16,7 +16,6 @@ import WebGL from '~/pages/_common/components/webgl/WebGL.js';
 
 /// ASSETS CSS ///
 import sCSS from './Home.css';
-import { dom } from 'dat.gui';
 
 
 ///////////////////////////////
