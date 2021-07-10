@@ -353,7 +353,7 @@ class WebGL extends HTMLElement {
   createCamera() {
     this.camera = new THREE.PerspectiveCamera(45, this.domCanvas.clientWidth / this.domCanvas.clientHeight, 1, 10000);
     this.camera.fov = 20;
-    this.camera.position.set(-60, -65, 90);
+    this.camera.position.set(19, 15, 30);
 
     this.camera.updateProjectionMatrix();
   };
@@ -368,13 +368,18 @@ class WebGL extends HTMLElement {
 
     this.renderer.setSize(this.domCanvas.clientWidth, this.domCanvas.clientHeight);
 
-    this.renderer.outputEncoding = THREE.sRGBEncoding;
-    this.renderer.toneMapping = THREE.ReinhardToneMapping;
-    this.renderer.toneMappingExposure = 0.18; // exposure / f-stop
-
     // LINK: https://threejs.org/examples/#webgl_lights_physical
     // LINK: https://github.com/mrdoob/three.js/blob/master/examples/webgl_lights_physical.html
     this.renderer.physicallyCorrectLights = true;
+
+  //  this.renderer.gammaOutput =
+
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer.toneMapping = THREE.LinearToneMapping;
+    this.renderer.toneMappingExposure = 1.180; // exposure / f-stop
+
+
+
     this.renderer.shadowMap.enabled = true;
 
     // TODO : can we detect recent iPads specifically?
@@ -558,12 +563,22 @@ class WebGL extends HTMLElement {
       this.resources[resource].scene.traverse(function (resource) {
         // set mesh interpretation
         if (resource.isMesh) {
+
           resource.castShadow = true;
           resource.receiveShadow = true;
+
+          console.log(1212121212);
+          console.log(resource.material);
+
+          // TODO: is this correct for the default(?) blender shader
+          // resource.material.roughness = 0.5;
+          resource.material.metalness = 0.05;
 
           // set texture map interpretation
           if (resource.material.map !== null) {
             resource.material.map.anisotropy = maxAnisotropy;
+
+
           };
         };
       }.bind(this));
@@ -663,13 +678,15 @@ class WebGL extends HTMLElement {
 
     //   // pointLights
       else if (child.userData.type === 'pointLight') {
-        const new_light = new THREE.PointLight(new THREE.Color(child.userData.color), child.userData.power, 500, 2.0);
+        console.log(child.userData.distance);
+        // see https://discourse.threejs.org/t/luminous-intensity-calculation/19242/6
+        const new_light = new THREE.PointLight(new THREE.Color(child.userData.color), child.userData.power * 0.0954, child.userData.distance, 2.0);
 
         new_light.position.copy(child.position);
         new_light.rotation.copy(child.rotation);
     //     // new_light.quaternion.copy(element.quaternion);
         new_light.castShadow = true;
-        new_light.shadow.bias = -0.0005;
+        new_light.shadow.bias = -0.00001;
 
         if (!this.env.bIsMobile && this.env.nGPUTier > 1) {
           new_light.shadow.mapSize.width = 2048;
@@ -722,7 +739,7 @@ class WebGL extends HTMLElement {
     gui_folder_renderSettings.addInput(this.gui_renderSettings, 'gpu', { label: 'gpu', disabled: true });
     gui_folder_renderSettings.addInput(this.gui_renderSettings, 'gpuTier', { label: 'gpuTier', disabled: true });
     gui_folder_renderSettings.addInput(this.gui_renderSettings, 'shadowMap', { label: 'shadowMap', disabled: true });
-    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'anisotropy', { label: 'anisotropy', disabled: true });
+    gui_folder_renderSettings.addInput(this.gui_renderSettings, 'anisotropy', { label: 'anisotr.', disabled: true });
 
     gui_folder_renderSettings.addInput(this.gui_renderSettings, 'pixelRatio', {
       label: 'hidpi', min: 0.5, max: 5.0, step: 0.1 },
@@ -808,13 +825,13 @@ class WebGL extends HTMLElement {
     this.entities.helpers['axesHelper'].visible = true;
     this.scene.add(this.entities.helpers['axesHelper']);
 
-    this.entities.helpers['gridHelper'] = new THREE.GridHelper(100, 10, 0x808080, 0x808080);
+    this.entities.helpers['gridHelper'] = new THREE.GridHelper(10, 10, 0x666666, 0x666666);
     this.entities.helpers['gridHelper'].position.y = 0;
     this.entities.helpers['gridHelper'].position.x = 0;
     this.entities.helpers['gridHelper'].visible = true;
     this.scene.add(this.entities.helpers['gridHelper']);
 
-    this.entities.helpers['polarGridHelper'] = new THREE.PolarGridHelper(200, 16, 8, 64, 0x808080, 0x808080);
+    this.entities.helpers['polarGridHelper'] = new THREE.PolarGridHelper(200, 16, 8, 64, 0x666666, 0x666666);
     this.entities.helpers['polarGridHelper'].position.y = 0;
     this.entities.helpers['polarGridHelper'].position.x = 0;
     this.entities.helpers['polarGridHelper'].visible = true;
