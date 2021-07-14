@@ -140,7 +140,7 @@ exit
 ``` 
 ```powershell
 # powershell (regular user)
-cp .\Downloads\.zshrc_wayfolk \\wsl$\wsl-wayfolk\home\wayfolk
+cp ..\Downloads\.zshrc_wayfolk \\wsl$\wsl-wayfolk\home\wayfolk
 wsl -d wsl-wayfolk -u wayfolk
 ```  
 ```zsh
@@ -235,12 +235,6 @@ wsl -d wsl-wayfolk -u wayfolk
 ```zsh
 # zsh (theundebruijn)
 sudo ln -s /usr/bin/python3.8 /usr/local/bin/python
-sudo apt install ffmpeg
-
-sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-sudo chmod a+rx /usr/local/bin/youtube-dl
-
-sudo apt install gifsicle
 sudo apt install p7zip-full p7zip-rar
 ```
 <br/>
