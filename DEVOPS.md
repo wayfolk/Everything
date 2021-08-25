@@ -119,6 +119,9 @@ sudo nano /etc/resolv.conf
 # add the following :
 nameserver 1.1.1.1
 nameserver 1.0.0.1
+    
+# https://github.com/microsoft/WSL/issues/1908#issuecomment-833786754
+sudo chattr +i /etc/resolv.conf
 
 exit
 wsl --shutdown
