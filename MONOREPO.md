@@ -103,7 +103,7 @@ git config --add lfs.standalonetransferagent lfs-folder
 git sparse-checkout init --cone
 # this performs a _full_ checkout of the project folder (incl. the bits that are also checked out in wsl2)
 # feel free to perform a more sparse checkout one when it becomes a little much
-git sparse-checkout set WAYF0000 WAYF0001
+git sparse-checkout set WAYF0000 WAYF0001 WAYF0002
 git reset --hard main
 ```
 <sup>howto / update the sparse-checkout mapping (post checkout)</sup>  
@@ -126,7 +126,7 @@ git config --add lfs.customtransfer.lfs-folder.path lfs-folderstore
 git config --add lfs.customtransfer.lfs-folder.args "/home/wayfolk/.gcsfuse_mountpoint"
 git config --add lfs.standalonetransferagent lfs-folder
 git sparse-checkout init --cone
-git sparse-checkout set _meta/Workspaces WAYF0001/Output/Code
+git sparse-checkout set _meta/Workspaces WAYF0001/Output/Code WAYF0002/Output/Code
 git reset --hard main
 ```
 <br/>
