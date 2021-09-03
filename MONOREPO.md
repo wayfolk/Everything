@@ -93,7 +93,7 @@ lfs-folderstore --version
 
 # make a sparse checkout</sup>  
 mkdir -p "/mnt/c/Work/Wayfolk"
-git clone --no-checkout git@github.com-wayfolk:wayfolk/Everything.git "/mnt/c/Work/Wayfolk/Everything"
+git clone --no-checkout --depth 1 git@github.com-wayfolk:wayfolk/Everything.git "/mnt/c/Work/Wayfolk/Everything"
 cd "/mnt/c/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
@@ -101,8 +101,6 @@ git config --add lfs.customtransfer.lfs-folder.path lfs-folderstore
 git config --add lfs.customtransfer.lfs-folder.args "/home/wayfolk/.gcsfuse_mountpoint"
 git config --add lfs.standalonetransferagent lfs-folder
 git sparse-checkout init --cone
-# this performs a _full_ checkout of the project folder (incl. the bits that are also checked out in wsl2)
-# feel free to perform a more sparse checkout one when it becomes a little much
 git sparse-checkout set WAYF0000 WAYF0001 WAYF0002
 git reset --hard main
 ```
@@ -118,7 +116,7 @@ git sparse-checkout set THEU0000/Input/Resources
 # zsh (wayfolk)
 # make a sparse checkout</sup>  
 mkdir -p "/home/wayfolk/Work/Wayfolk"
-git clone --no-checkout git@github.com-wayfolk:wayfolk/Everything.git "/home/wayfolk/Work/Wayfolk/Everything"
+git clone --no-checkout --depth 1 git@github.com-wayfolk:wayfolk/Everything.git "/home/wayfolk/Work/Wayfolk/Everything"
 cd "/home/wayfolk/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
