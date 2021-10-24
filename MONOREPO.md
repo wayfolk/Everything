@@ -80,14 +80,14 @@ exit
 ```zsh
 # zsh (wayfolk)
 # make sure the mount is available
-ls /home/theundebruijn/.fstab_work_theundebruijn_devops_gitlfs_everything
+ls /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything
 
 # make sure lfs-folderstore is available on the PATH
 lfs-folderstore --version
 
 # make a sparse checkout</sup>  
 mkdir -p "/mnt/c/Work/Wayfolk"
-git clone --no-checkout --depth 1 git@github.com-wayfolk:wayfolk/Everything.git "/mnt/c/Work/Wayfolk/Everything"
+git clone --no-checkout --depth 1 --sparse git@github.com-wayfolk:wayfolk/Everything.git "/mnt/c/Work/Wayfolk/Everything"
 cd "/mnt/c/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
