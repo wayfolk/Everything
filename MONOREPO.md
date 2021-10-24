@@ -71,11 +71,10 @@ lfs-folderstore --version
 ```zsh
 # zsh (wayfolk)
 
-mkdir -p /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything
+sudo mkdir -p /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything
 cp /mnt/c/Users/Theun\ de\ Bruijn/Downloads/.fstab_credentials ~/
 sudo nano /etc/fstab
-//192.168.50.216/Work/Theun\040de\040Bruijn/DevOps/Git\040LFS/Everything /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything cifs vers=3.0,credentials=/home/wayfolk/.fstab_credentials,iocharset=utf8  0  0
-mount -a
+//192.168.50.216/Work/Wayfolk/DevOps/Git\040LFS/Everything /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything cifs vers=3.0,credentials=/home/wayfolk/.fstab_credentials,iocharset=utf8  0  0
 exit
 ```
 ```zsh
