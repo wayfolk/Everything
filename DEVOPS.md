@@ -24,10 +24,10 @@
 
 <sup><b>_prerequisites:_</b>\
 \
-Microsoft Windows 10 `(x64)` `(enterprise)` — `version 21H1`, `build 19043.1023`
+Microsoft Windows 11 `(x64)` `(enterprise)` — `version 21H2`, `build 22000.282`
 </sup>
 
-##### Windows 10 Features
+##### Windows 11 Features
 <sup>1 / enable windows subsystem for linux — https://docs.microsoft.com/en-us/windows/wsl/install-win10</sup>  
 ```powershell
 # powershell (administrator)
@@ -38,10 +38,10 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 <sup>3 / install linux kernel update package `wsl_update_x64.exe` — https://docs.microsoft.com/en-us/windows/wsl/install-win10</sup>  
 <sup>4 / install latest `(stable)` microsoft terminal release — https://github.com/microsoft/terminal/releases</sup>  
 <sup>5 / install latest visual studio code release `(x64)` `(user installer)` — https://code.visualstudio.com/download</sup>  
-<sup>6 / install the `Fira Code Regular Nerd Font Complete Mono Windows Compatible.otf` fontface — https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode/Retina/complete/</sup>  
-<sup>6 / install the  visual studio code `City Lights` theme — https://marketplace.visualstudio.com/items?itemName=Yummygum.city-lights-theme</sup>  
-<sup>7 / configure visual studio code to use `"FiraCode NF Retina"` at `12px`</sup>  
-<sup>8 / configure microsoft terminal `settings.json` -> `schemes` :</sup>  
+<sup>6 / install the `Blex Mono Medium Nerd Font Complete Mono Windows Compatible.ttf` fontface — https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/IBMPlexMono/Mono/complete/Blex%20Mono%20Medium%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf</sup>  
+<sup>7 / install the  visual studio code `City Lights` theme — https://marketplace.visualstudio.com/items?itemName=Yummygum.city-lights-theme</sup>  
+<sup>8 / configure visual studio code to use `"BlexMono NF"` at `13px`</sup>  
+<sup>9 / configure microsoft terminal `settings.json` -> `schemes` :</sup>  
 ```json
 {
     "name" : "City Lights (wayfolk)",
@@ -65,28 +65,28 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
     "brightYellow" : "#f7dab3"
 }
 ```
-<sup>9 / configure microsoft terminal `settings.json` -> `defaults` :</sup>  
+<sup>10 / configure microsoft terminal `settings.json` -> `defaults` :</sup>  
 ```json
-"fontFace" : "FiraCode NF Retina",
-"fontSize" : 9,
-"colorScheme" : "City Lights (wayfolk)"
+"fontFace" : "BlexMono NF",
+"fontSize" : 10,
+"colorScheme" : "City Lights (theundebruijn)"
 ```
-<sup>10 / set default wsl version — https://docs.microsoft.com/en-us/windows/wsl/install-win10</sup>  
+<sup>11 / set default wsl version — https://docs.microsoft.com/en-us/windows/wsl/install-win10</sup>  
 ```powershell
 # powershell (regular user)
 wsl --set-default-version 2
 ```  
-<sup>11 / download the latest `ubuntu-20.10-server-cloudimg-amd64-wsl.rootfs.tar.gz` — https://cloud-images.ubuntu.com/releases/groovy/release/</sup>  
-<sup>12 / create the wsl2 vm
+<sup>12 / download the latest `ubuntu-21.04-server-cloudimg-amd64-wsl.rootfs.tar.gz — https://cloud-images.ubuntu.com/releases/hirsute/release/ubuntu-21.04-server-cloudimg-amd64-wsl.rootfs.tar.gz</sup>  
+<sup>13 / create the wsl2 vm
 ```powershell
 # powershell (regular user)
 mkdir "C:\Users\<user name>\.wsl\"
-cp .\Downloads\ubuntu-20.10-server-cloudimg-amd64-wsl.rootfs.tar.gz "C:\Users\<user name>\.wsl\"
+cp .\Downloads\ubuntu-21.04-server-cloudimg-amd64-wsl.rootfs.tar.gz "C:\Users\<user name>\.wsl\"
 cd "C:\Users\<user name>\.wsl\"
-wsl --import wsl-wayfolk wsl-wayfolk ubuntu-20.10-server-cloudimg-amd64-wsl.rootfs.tar.gz
+wsl --import wsl-wayfolk wsl-wayfolk ubuntu-21.04-server-cloudimg-amd64-wsl.rootfs.tar.gz
 wsl -l -v
 ```  
-<sup>13 / configure vm : add user
+<sup>14 / configure vm : add user
 ```powershell
 # powershell (regular user)
 wsl -d wsl-wayfolk
@@ -97,7 +97,7 @@ adduser wayfolk
 usermod -aG sudo wayfolk
 exit
 ``` 
-<sup>14 / configure vm : wsl config
+<sup>15 / configure vm : wsl config
 ```powershell
 # powershell (regular user)
 wsl -d wsl-wayfolk -u wayfolk
@@ -149,8 +149,7 @@ wsl -d wsl-wayfolk -u wayfolk
 ```zsh
 # zsh (wayfolk)
 cd ~
-sudo chown $USER:$USER ./.zshrc_wayfolk
-mv ./.zshrc_wayfolk ./.zshrc
+sudo chown $USER:$USER ./.zshrc_wayfolk && mv ./.zshrc_wayfolk ./.zshrc
 exit
 ```
 ```powershell
@@ -199,7 +198,7 @@ ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 # zsh (wayfolk)
 sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io
 sudo usermod -aG docker $USER
@@ -213,7 +212,7 @@ wsl -d wsl-wayfolk -u wayfolk
 ```    
  ```zsh
 # zsh (wayfolk)
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/2.0.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 # set dockerd to autostart without sudo pw
@@ -237,7 +236,7 @@ wsl -d wsl-wayfolk -u wayfolk
 ```  
 ```zsh
 # zsh (theundebruijn)
-sudo ln -s /usr/bin/python3.8 /usr/local/bin/python
+sudo ln -s /usr/bin/python3.9 /usr/local/bin/python
 sudo apt install p7zip-full p7zip-rar
 ```
 <br/>
