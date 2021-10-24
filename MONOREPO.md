@@ -50,18 +50,10 @@ gcloud config set project wayfolk
 # authenticate and store Application Default Credentials (ADC)  
 gcloud auth application-default login # handle flow via an authenticated browser session
 ```
-<sup>2/ install gcsfuse — https://github.com/GoogleCloudPlatform/gcsfuse/blob/master/docs/installing.md</sup>  
+<sup>2/ install cifs-utils</sup>  
 ```zsh
-# zsh (wayfolk)
-# todo : update this to ubuntu 20.10 (groovy) when available
-# for now we downgrade the lsb_release to ubuntu 18.04 (bionic)
-# as the 20.04 (focal) release doesn't offer the latest build — https://github.com/GoogleCloudPlatform/gcsfuse/issues/477
-export GCSFUSE_REPO=gcsfuse-bionic
-echo "deb http://packages.cloud.google.com/apt $GCSFUSE_REPO main" | sudo tee /etc/apt/sources.list.d/gcsfuse.list
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo apt update
-sudo apt install gcsfuse
-gcsfuse --version
+sudo apt install cifs-utils
 ```
 <sup>3/ install lfs-folderstore — https://github.com/sinbad/lfs-folderstore</sup>  
 ```zsh
@@ -78,15 +70,18 @@ lfs-folderstore --version
 <sup>howto / perform a sparse checkout of an existing repo</sup>  
 ```zsh
 # zsh (wayfolk)
-# setup automounting of the gcp storage bucket — https://cloud.google.com/storage
 
-mkdir ~/.gcsfuse_mountpoint
+mkdir -p /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything
+cp /mnt/c/Users/Theun\ de\ Bruijn/Downloads/.fstab_credentials ~/
+sudo nano /etc/fstab
+//192.168.50.216/Work/Theun\040de\040Bruijn/DevOps/Git\040LFS/Everything /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything cifs vers=3.0,credentials=/home/wayfolk/.fstab_credentials,iocharset=utf8  0  0
+mount -a
 exit
 ```
 ```zsh
 # zsh (wayfolk)
-# make sure the fuse mount is available
-ls ~/.gcsfuse_mountpoint
+# make sure the mount is available
+ls /home/theundebruijn/.fstab_work_theundebruijn_devops_gitlfs_everything
 
 # make sure lfs-folderstore is available on the PATH
 lfs-folderstore --version
@@ -98,7 +93,7 @@ cd "/mnt/c/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
 git config --add lfs.customtransfer.lfs-folder.path lfs-folderstore
-git config --add lfs.customtransfer.lfs-folder.args "/home/wayfolk/.gcsfuse_mountpoint"
+git config --add lfs.customtransfer.lfs-folder.args "/home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything"
 git config --add lfs.standalonetransferagent lfs-folder
 git sparse-checkout init --cone
 git sparse-checkout set WAYF0000 WAYF0001 WAYF0002
@@ -121,7 +116,7 @@ cd "/home/wayfolk/Work/Wayfolk/Everything"
 git config user.name "Theun de Bruijn" && git config user.email "theun@theundebruijn.com"
 git lfs install
 git config --add lfs.customtransfer.lfs-folder.path lfs-folderstore
-git config --add lfs.customtransfer.lfs-folder.args "/home/wayfolk/.gcsfuse_mountpoint"
+git config --add lfs.customtransfer.lfs-folder.args "/home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything"
 git config --add lfs.standalonetransferagent lfs-folder
 git sparse-checkout init --cone
 git sparse-checkout set _meta/Workspaces WAYF0001/Output/Code WAYF0002/Output/Code
