@@ -30,32 +30,12 @@ a wsl2 vm configured using the [devops readme](DEVOPS.md)
 </sup>
 
 ##### monorepo setup
-<sup>1/ install Cloud SDK — https://cloud.google.com/sdk/docs/install#deb</sup>  
-```powershell
-# powershell (regular user)
-wsl -d wsl-wayfolk -u wayfolk
-``` 
-```zsh
-# zsh (wayfolk)
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-sudo apt-get install apt-transport-https ca-certificates gnupg
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-sudo apt update
-sudo apt install google-cloud-sdk
-
-# authenticate Cloud SDK and set default project
-gcloud auth login # handle flow via an authenticated browser session
-gcloud config set project wayfolk
-
-# authenticate and store Application Default Credentials (ADC)  
-gcloud auth application-default login # handle flow via an authenticated browser session
-```
-<sup>2/ install cifs-utils</sup>  
+<sup>1/ install cifs-utils</sup>  
 ```zsh
 sudo apt update
 sudo apt install cifs-utils
 ```
-<sup>3/ install lfs-folderstore — https://github.com/sinbad/lfs-folderstore</sup>  
+<sup>2/ install lfs-folderstore — https://github.com/sinbad/lfs-folderstore</sup>  
 ```zsh
 # zsh (theundebruijn)
 wget https://github.com/sinbad/lfs-folderstore/releases/download/v1.0.1/lfs-folderstore-linux-amd64-v1.0.1.zip -P ~
@@ -76,6 +56,7 @@ cp /mnt/c/Users/Theun\ de\ Bruijn/Downloads/.fstab_credentials ~/
 sudo nano /etc/fstab
 //192.168.50.216/Work/Wayfolk/DevOps/Git\040LFS/Everything /home/wayfolk/.fstab_work_wayfolk_devops_gitlfs_everything cifs vers=3.0,credentials=/home/wayfolk/.fstab_credentials,iocharset=utf8  0  0
 exit
+wsl --shutdown
 ```
 ```zsh
 # zsh (wayfolk)
